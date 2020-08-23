@@ -19,8 +19,8 @@
 <h3>${isNew?'Add new product':'Edit product' }</h3>
 <form action="${isNew?'insertproduct':'saveproduct' }" method="post">
 		<div>
-			<label>SL No</label>
-			<input type="number" name="id" value="${productMaster.id}" required ${isNew?'':'readonly' }/>
+			<label>Product ID</label>
+			<input type="number" name="id" value="${productMaster.id}" required ${isNew?'':'readonly' } text="number" min="0"/>
 		</div>
 		<br/>	
 		<div>

@@ -11,13 +11,21 @@
 <jsp:include page="header.jsp"/>
 
 <h3>
-Welcome ${visitorprof.userName}
+${visitorprof.userName} Welcome To User Portal
 </h3>
 
 <nav>
-<a href="homepage">Go to Home Page</a>
+<a href="homepage">Home Page</a> <span> | </span>
+	<c:if test="${selectedProductsList != null }">
+	<a href="showcart">Show cart</a>
+	</c:if>
 </nav>
 <hr/>
+<c:if test="${msg != null }">
+		<p><strong>${msg }</strong></p>
+	</c:if>
+	
+<h2>Product Cart</h2>
 <h3>Choose your required items</h3>
 	<c:choose>
 		<c:when test="${productMaster == null || productMaster.isEmpty() }">
@@ -39,9 +47,9 @@ Welcome ${visitorprof.userName}
 						<td>${pm.productDescription }</td>
 						<td>${pm.productName }</td>
 						<td>${pm.cost }</td>
-						<td><input type="number" id="${products.index+1 }" name="reqQuantity" value="${pm.reqQuantity}"></input> </td>
+						<td><input type="number" id="${products.index+1 }" name="reqQuantity" value="${pm.reqQuantity}" text="Number" min="0"></input> </td>
 						<td>
-						<a href='' onclick="this.href='additem?id=${pm.id}&reqQuantity='+document.getElementById('${products.index+1 }').value">Add to cart</a>
+						<a href='' onclick="this.href='additem?id=${pm.id}&reqQuantity='+document.getElementById('${products.index+1 }').value">Add To Cart</a>
 						</td>
 					</tr> 
 				</c:forEach>
@@ -51,15 +59,8 @@ Welcome ${visitorprof.userName}
 		</c:otherwise>
 	</c:choose>
 	
-	<c:if test="${msg != null }">
-		<p><strong>${msg }</strong></p>
-	</c:if>
 	
-	<nav>
-	<c:if test="${selectedProductsList != null }">
-	<a href="showcart">Show cart</a>
-	</c:if>
-	</nav>
+
 	
 	<jsp:include page="footer.jsp"/>
 </body>

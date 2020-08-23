@@ -1,6 +1,6 @@
 package com.wf.corona.model;
 
-public class ProductMaster {
+public class ProductItem {
 	
 
 	private Integer id;
@@ -12,11 +12,11 @@ public class ProductMaster {
 	private Double totalCost;
 	private Double totalAmt;
 	
-	public ProductMaster() {
+	public ProductItem() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ProductMaster(Integer id, String productName, Double cost, String productDescription,int reqQuantity,String availableQuantity,Double totalCost,Double totalAmt) {
+	public ProductItem(Integer id, String productName, Double cost, String productDescription,int reqQuantity,String availableQuantity,Double totalCost,Double totalAmt) {
 		super();
 		this.id = id;
 		this.productName = productName;

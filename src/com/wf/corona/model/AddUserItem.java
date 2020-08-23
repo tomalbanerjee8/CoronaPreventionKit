@@ -1,15 +1,20 @@
 package com.wf.corona.model;
 
-public class VisitorProfile {
+public class AddUserItem {
 	
 	
 	private String userName;
 	private String emailid;
 	private String contact;
+	private String flatno;
+	private String street;
+	private String area;
+	private String city;
+	private String state;
 	
 	
 	
-	public VisitorProfile(String userName, String emailid, String contact, String flatno, String street, String area,
+	public AddUserItem(String userName, String emailid, String contact, String flatno, String street, String area,
 			String city, String state) {
 		super();
 		this.userName = userName;
@@ -22,7 +27,7 @@ public class VisitorProfile {
 		this.state = state;
 	}
 
-	public VisitorProfile() {
+	public AddUserItem() {
 	}
 
 	public String getUserName() {
@@ -43,13 +48,6 @@ public class VisitorProfile {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	
-		private String flatno;
-		private String street;
-		private String area;
-		private String city;
-		private String state;
-		
 		
 		public String getFlatno() {
 			return flatno;

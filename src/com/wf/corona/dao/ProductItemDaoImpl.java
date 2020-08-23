@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wf.corona.exception.CoronaException;
-import com.wf.corona.model.ProductMaster;
+import com.wf.corona.exception.CkException;
+import com.wf.corona.model.ProductItem;
 
-public class ProductMasterDaoImpl implements ProductMasterDao {
+public class ProductItemDaoImpl implements ProductItemDao {
 	
 	public static final String INS_ITEM_QRY = "INSERT INTO productitems(id,productdesc,productname,cost) values(?,?,?,?)";
 	public static final String UPD_ITEM_QRY = "UPDATE productitems SET productdesc=?,productname=?,cost=? WHERE id=?";
@@ -19,14 +19,12 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 	public static final String SEL_ALL_ITEMS_QRY = "SELECT id,productdesc,productname,cost FROM productitems";
 
 	@Override
-	public ProductMaster add(ProductMaster productMaster) throws CoronaException {
-		System.out.println("in dao");
+	public ProductItem add(ProductItem productMaster) throws CkException {
 		if (productMaster != null) 
 		{ 
 			try (Connection con = ConnectionFactory.getConnection(); 
 					PreparedStatement pst =
 		  con.prepareStatement(INS_ITEM_QRY)) {
-				System.out.println("INS_ITEM_QRY" + INS_ITEM_QRY);
 		  
 		  pst.setInt(1, productMaster.getId()); 
 		  pst.setString(2, productMaster.getProductDescription());
@@ -38,16 +36,15 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 		  } 
 			catch (SQLException  exp) {
 				exp.printStackTrace();
-				throw new CoronaException("Saving the product failed!"); } } 
+				throw new CkException("Adding Product failed!"); } } 
 		return productMaster;
 	}
 
 	@Override
-	public ProductMaster save(ProductMaster productMaster) throws CoronaException {
+	public ProductItem save(ProductItem productMaster) throws CkException {
 		if (productMaster != null) {
 			try (Connection con = ConnectionFactory.getConnection();
 					PreparedStatement pst = con.prepareStatement(UPD_ITEM_QRY);) {
-				System.out.println("in update " + productMaster.getId());
 
 				pst.setString(1, productMaster.getProductDescription());
 				pst.setString(2, productMaster.getProductName());
@@ -57,14 +54,14 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 
 			} catch (SQLException exp) {
 				exp.printStackTrace();
-				throw new CoronaException("An error occured, Could not save the loan details!");
+				throw new CkException("An error occured, Could not able to edit product");
 			}
 		}
 		return productMaster;
 	}
 
 	@Override
-	public boolean deleteById(Integer productMasterdId) throws CoronaException {
+	public boolean deleteById(Integer productMasterdId) throws CkException {
 		boolean isDeleted = false;
 
 		try (Connection con = ConnectionFactory.getConnection();
@@ -77,16 +74,16 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 			isDeleted= rowsCount>0 ;
 
 		} catch (SQLException exp) {
-			throw new CoronaException("An error occured, Could not delete the loan details!");
+			throw new CkException("An error occured, Could not able to delete the product!");
 		}
 
 		return isDeleted;
 	}
 
 	@Override
-	public List<ProductMaster> getAll() throws CoronaException {
+	public List<ProductItem> getAll() throws CkException {
 		
-		List<ProductMaster> products = new ArrayList<>();
+		List<ProductItem> products = new ArrayList<>();
 		
 		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement pst = con.prepareStatement(SEL_ALL_ITEMS_QRY);) {		
@@ -94,7 +91,7 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 			ResultSet rs = pst.executeQuery();
 			
 			while(rs.next()) {
-				ProductMaster pm = new ProductMaster();
+				ProductItem pm = new ProductItem();
 				pm.setId(rs.getInt(1));
 				pm.setProductDescription(rs.getString(2));
 				pm.setProductName(rs.getString(3));
@@ -107,16 +104,16 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 				products=null;
 			}
 		} catch (SQLException exp) {
-			throw new CoronaException("An error occured, Could not retrive the loan details!");
+			throw new CkException("An error occured, Could not able to retrive the product!");
 		}
 				
 		return products;
 	}
 
 	@Override
-	public ProductMaster getById(Integer productMasterId) throws CoronaException {
+	public ProductItem getById(Integer productMasterId) throws CkException {
 		
-		ProductMaster product=null;
+		ProductItem product=null;
 		
 		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement pst = con.prepareStatement(SEL_ITEM_QRY_BY_ID);) {		
@@ -126,7 +123,7 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 			ResultSet rs = pst.executeQuery();
 			
 			if(rs.next()) {
-				product = new ProductMaster();
+				product = new ProductItem();
 				product.setId(rs.getInt(1));
 				product.setProductDescription(rs.getString(2));
 				product.setProductName(rs.getString(3));
@@ -134,7 +131,7 @@ public class ProductMasterDaoImpl implements ProductMasterDao {
 			}
 			
 		} catch (SQLException exp) {
-			throw new CoronaException("An error occured, Could not retrive the loan details!");
+			throw new CkException("An error occured, Could not able to retrive the product!");
 		}
 		
 		return product;

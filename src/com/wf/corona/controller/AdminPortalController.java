@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wf.corona.exception.CoronaException;
-import com.wf.corona.model.ProductMaster;
-import com.wf.corona.service.AdminService;
-import com.wf.corona.service.AdminServiceImpl;
+import com.wf.corona.exception.CkException;
+import com.wf.corona.model.ProductItem;
+import com.wf.corona.service.ProductService;
+import com.wf.corona.service.ProductServiceImpl;
+
 
 @WebServlet({ "/admin","/addproduct", "/insertproduct", "/saveproduct", "/listOfproductsAdmin", "/deleteProd" ,"/editProd","/logout","/login"})
 public class AdminPortalController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
-	private AdminService adminService;
+	private ProductService adminService;
 
 	@Override
 	public void init() throws ServletException {
-		adminService = new AdminServiceImpl();
+		adminService = new ProductServiceImpl();
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class AdminPortalController extends HttpServlet{
 			break;
 		
 		
-		  case "/login" : viewName = adminLogin12(request, response); break;
+		  case "/login" : viewName = adminLoginSucess(request, response); break;
 		 
 		 
 		case "/addproduct":
@@ -75,7 +76,7 @@ public class AdminPortalController extends HttpServlet{
 	
 	private String showNewProductForm(HttpServletRequest request, HttpServletResponse response) {
 			
-			ProductMaster item = new ProductMaster();
+			ProductItem item = new ProductItem();
 			request.setAttribute("productMaster", item);
 			request.setAttribute("isNew", true);
 			request.setAttribute("loginsuccess", true);
@@ -92,20 +93,23 @@ public class AdminPortalController extends HttpServlet{
 	}
 	
 	
-	  private String adminLogin12(HttpServletRequest request, HttpServletResponse
+	  private String adminLoginSucess(HttpServletRequest request, HttpServletResponse
 	  response) {
-	  
-	  
+	  String view="";
+	 
 	  request.setAttribute("loginsuccess", true);
+	  view="AdminUserLogin.jsp";
+	  view="listOfproductsAdmin";
+	  return view; 
 	  
-	  return "AdminUserLogin.jsp"; }
+	  }
 	  
 	 
 		private String doCreateOrSaveProd(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
 			
 			
-			ProductMaster pm = new ProductMaster(); 
+			ProductItem pm = new ProductItem(); 
 			pm.setId(Integer.parseInt(request.getParameter("id")));
 			pm.setProductDescription(request.getParameter("productDescription"));
 			pm.setProductName(request.getParameter("productName"));
@@ -125,7 +129,8 @@ public class AdminPortalController extends HttpServlet{
 				request.setAttribute("msg", "Product is saved");
 				request.setAttribute("loginsuccess", true);
 				view="AdminUserLogin.jsp";
-			} catch (CoronaException e) {
+				view="listOfproductsAdmin";
+			} catch (CkException e) {
 				request.setAttribute("errMsg", e.getMessage());
 				view = "errorPage.jsp";
 			}
@@ -138,11 +143,11 @@ public class AdminPortalController extends HttpServlet{
 			String view = "";
 		
 			try {
-				List<ProductMaster> products = adminService.getAllProductMasters();
+				List<ProductItem> products = adminService.getAllProductMasters();
 				request.setAttribute("productMaster", products);
 				request.setAttribute("loginsuccess", true);
 				view = "listproducts.jsp";
-			} catch (CoronaException e) {
+			} catch (CkException e) {
 				request.setAttribute("errMsg", e.getMessage());
 				view = "errorPage.jsp";
 			}
@@ -157,13 +162,13 @@ public class AdminPortalController extends HttpServlet{
 			int productMasterId = Integer.parseInt(request.getParameter("id"));
 			System.out.println("productMasterId  " + productMasterId);
 			try {
-				ProductMaster pm = adminService.getProductMaster(productMasterId);
+				ProductItem pm = adminService.getProductMaster(productMasterId);
 				System.out.println("pm " +pm.getProductName());
 				request.setAttribute("productMaster", pm);
 				request.setAttribute("isNew", false);
 				request.setAttribute("loginsuccess", true);
 				view = "newproduct.jsp";
-			} catch (CoronaException e) {
+			} catch (CkException e) {
 				request.setAttribute("errMsg", e.getMessage());
 				view = "errorPage.jsp";
 			}
@@ -180,7 +185,8 @@ public class AdminPortalController extends HttpServlet{
 				request.setAttribute("msg", "Product is deleted!");
 				request.setAttribute("loginsuccess", true);
 				view = "AdminUserLogin.jsp";
-			} catch (CoronaException e) {
+				view="listOfproductsAdmin";
+			} catch (CkException e) {
 				request.setAttribute("errMsg", e.getMessage());
 				view = "errorPage.jsp";
 			}

@@ -13,14 +13,14 @@
 <h3 style="text-align:center">Your Order summary</h3>
 
 <nav>
-<a href="homepage">Go to Home Page</a>
+<a href="homepage">Home Page</a>
 </nav>
 <br/>
 <table>
 <tr>
-<div><b>Visitor Name: </b><span style="color:blue">${visitorprof.userName}</span></div>
-<div><b>Email: </b><span style="color:blue">${visitorprof.emailid}</span></div>
-<div><b>Contact: </b><span style="color:blue">${visitorprof.contact}</span></div>
+<div><b>User Name: </b><span style="color:blue">${visitorprof.userName}</span></div>
+<div><b>User Email: </b><span style="color:blue">${visitorprof.emailid}</span></div>
+<div><b>User Contact: </b><span style="color:blue">${visitorprof.contact}</span></div>
 <br/>
 <b>Delivery Address</b>
 <address style="color:blue">${visitorprof.flatno}, ${visitorprof.street}, ${visitorprof.area}</address>
@@ -33,14 +33,14 @@
 <%-- <h4>Delivery Address</h4>
 <address>${visitorprof.flatno}, ${visitorprof.street}, ${visitorprof.area}</address>
 <address>${visitorprof.city} . ${visitorprof.state}</address> --%>
-<hr/>
+
 <c:choose>
 		<c:when test="${selectedProductsList == null || selectedProductsList.isEmpty() }">
 			<p>No products were selected</p>
 		</c:when>
 		<c:otherwise>
 		<h3>Products added to cart by you!!</h3>
-		<hr/>
+		
 			<table border="1" cellspacing="5px" cellpadding="5px">
 				<tr>
 					<th>Description</th>

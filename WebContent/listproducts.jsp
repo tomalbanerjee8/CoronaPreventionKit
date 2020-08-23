@@ -40,9 +40,7 @@
 		</c:otherwise>
 	</c:choose>
 	
-	<c:if test="${msg != null }">
-		<p><strong>${msg }</strong></p>
-	</c:if>
+	
 	
 	<jsp:include page="footer.jsp"/>
 </body>

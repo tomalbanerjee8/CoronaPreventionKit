@@ -11,27 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wf.corona.dao.ProductMasterDao;
-import com.wf.corona.model.ProductMaster;
+import com.wf.corona.dao.ProductItemDao;
+import com.wf.corona.model.ProductItem;
 
 
 //@WebServlet({ "/admin", "/login","/insertProduct", "/newproduct", "/addLoan", "/editLoan", "/saveLoan" })
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ProductMasterDao productMasterDao;
+	private ProductItemDao productMasterDao;
 	
 	
-	public void setProductMasterDao(ProductMasterDao productMasterDao) {
+	public void setProductMasterDao(ProductItemDao productMasterDao) {
 		this.productMasterDao = productMasterDao;
-	}
-
-	public void init(ServletConfig config) {
-		String jdbcURL = config.getServletContext().getInitParameter("jdbcUrl");
-		String jdbcUsername = config.getServletContext().getInitParameter("jdbcUsername");
-		String jdbcPassword = config.getServletContext().getInitParameter("jdbcPassword");
-
-		//this.productMasterDao = new ProductMasterDao(jdbcURL, jdbcUsername, jdbcPassword);
-
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +40,7 @@ public class AdminController extends HttpServlet {
 				viewName = adminLogin(request, response);
 				break;
 			case "login" : 
-				viewName = adminLogin12(request, response);
+				viewName = adminLoginNext(request, response);
 				break;
 			case "addnewproduct":
 				viewName = showNewProductForm(request, response);
@@ -57,21 +48,7 @@ public class AdminController extends HttpServlet {
 			case "insertproduct":
 				viewName = insertProduct(request, response);
 				break;
-			case "deleteproduct":
-				viewName = deleteProduct(request, response);
-				break;
-			case "editproduct":
-				viewName = showEditProductForm(request, response);
-				break;
-			case "updateproduct":
-				viewName = updateProduct(request, response);
-				break;
-			case "list":
-				viewName = listAllProducts(request, response);
-				break;	
-			case "logout":
-				viewName = adminLogout(request, response);
-				break;	
+				
 			default : viewName = "notfound.jsp"; break;		
 			}
 		} catch (Exception ex) {
@@ -84,34 +61,10 @@ public class AdminController extends HttpServlet {
 		
 	}
 
-	private String adminLogout(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	private String listAllProducts(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	private String updateProduct(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	private String showEditProductForm(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	private String deleteProduct(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
+	
 	private String insertProduct(HttpServletRequest request, HttpServletResponse response) {
 		
-		ProductMaster pm = new ProductMaster(); 
+		ProductItem pm = new ProductItem(); 
 		pm.setId(Integer.parseInt(request.getParameter("id")));
 		pm.setProductDescription(request.getParameter("productDescription"));
 		pm.setProductName(request.getParameter("productName"));
@@ -125,7 +78,7 @@ public class AdminController extends HttpServlet {
 
 	private String showNewProductForm(HttpServletRequest request, HttpServletResponse response) {
 		
-		ProductMaster item = new ProductMaster();
+		ProductItem item = new ProductItem();
 		request.setAttribute("productMaster", item);
 		
 		return "newproduct.jsp";
@@ -139,7 +92,7 @@ public class AdminController extends HttpServlet {
 		return view;
 	}
 	
-private String adminLogin12(HttpServletRequest request, HttpServletResponse response) {
+private String adminLoginNext(HttpServletRequest request, HttpServletResponse response) {
 		
 
 	request.setAttribute("loginsuccess", true);

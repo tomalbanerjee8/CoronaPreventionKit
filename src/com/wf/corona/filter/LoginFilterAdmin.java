@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 
 
 @WebFilter("/login")
-public class AdminLoginFilter implements Filter {
+public class LoginFilterAdmin implements Filter {
 
 	@Override
 	public void destroy() {
@@ -22,26 +22,18 @@ public class AdminLoginFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
 			throws IOException, ServletException {
-		System.out.println("login id " + (String)req.getParameter("loginid"));
-		System.out.println("password " + (String)req.getParameter("password"));
 		
-		if("admin".equalsIgnoreCase((String)req.getParameter("loginid")) && "admin".equalsIgnoreCase((String)req.getParameter("password")))
+		if("admin".equals((String)req.getParameter("loginid")) && "admin".equals((String)req.getParameter("password")))
 		{
-			System.out.println("in filter if");
 			filterChain.doFilter(req, res);
-			
-			//req.setAttribute("loginsuccess", true);
-			//filterChain.doFilter(req, res);
-			
-			
 		}
 		else
 		{
-			System.out.println("in filter else");
+
 			req.setAttribute("loginsuccess", false);
-			req.setAttribute("msg", "Invalid Credentials");
+			req.setAttribute("msg", "Login Unsucessful! Invalid Username or Password");
 			req.getRequestDispatcher("AdminUserLogin.jsp").forward(req, res);
-			//filterChain.doFilter(req, res);
+
 		}
 
 	}

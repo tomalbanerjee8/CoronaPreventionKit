@@ -3,16 +3,16 @@ package com.wf.corona.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wf.corona.dao.ProductMasterDao;
-import com.wf.corona.dao.ProductMasterDaoImpl;
-import com.wf.corona.exception.CoronaException;
-import com.wf.corona.model.ProductMaster;
+import com.wf.corona.dao.ProductItemDao;
+import com.wf.corona.dao.ProductItemDaoImpl;
+import com.wf.corona.exception.CkException;
+import com.wf.corona.model.ProductItem;
 
-public class AdminServiceImpl implements AdminService {
-	ProductMasterDao productMasterDao;
+public class ProductServiceImpl implements ProductService {
+	ProductItemDao productMasterDao;
 	
-	public AdminServiceImpl() {
-		productMasterDao=new ProductMasterDaoImpl();
+	public ProductServiceImpl() {
+		productMasterDao=new ProductItemDaoImpl();
 	}
 
 	
@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 		return prodName!=null && (prodName.length()>0 && prodName.length()<100);
 	}
 	
-	private boolean isValidProduct(ProductMaster prod) throws CoronaException{
+	private boolean isValidProduct(ProductItem prod) throws CkException{
 		boolean isValid=true;
 		
 		List<String> errMsgs = new ArrayList<>();
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 			}
 			
 			if(!errMsgs.isEmpty()) {
-				throw new CoronaException(errMsgs.toString());
+				throw new CkException(errMsgs.toString());
 			}
 		}else {
 			isValid=false;
@@ -63,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
 		return isValid;
 	}
 	@Override
-	public ProductMaster validateAndSave(ProductMaster productMaster) throws CoronaException {
+	public ProductItem validateAndSave(ProductItem productMaster) throws CkException {
 		if(isValidProduct(productMaster)) {
 			productMasterDao.save(productMaster);
 		}
@@ -71,21 +71,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public boolean deleteProductMaster(Integer productMasterId) throws CoronaException {
+	public boolean deleteProductMaster(Integer productMasterId) throws CkException {
 		return productMasterDao.deleteById(productMasterId);
 	}
 
 	@Override
-	public ProductMaster getProductMaster(Integer productMasterId) throws CoronaException {
+	public ProductItem getProductMaster(Integer productMasterId) throws CkException {
 		return productMasterDao.getById(productMasterId);
 	}
 
 	@Override
-	public List<ProductMaster> getAllProductMasters() throws CoronaException {
+	public List<ProductItem> getAllProductMasters() throws CkException {
 		return productMasterDao.getAll();
 	}
 	@Override
-	public ProductMaster validateAndAdd(ProductMaster productMaster) throws CoronaException {
+	public ProductItem validateAndAdd(ProductItem productMaster) throws CkException {
 		if(isValidProduct(productMaster)) {
 			System.out.println("in impl");
 			productMasterDao.add(productMaster);

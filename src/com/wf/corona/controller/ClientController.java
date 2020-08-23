@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wf.corona.dao.KitDao;
-import com.wf.corona.dao.ProductMasterDao;
+import com.wf.corona.dao.ProductItemDao;
 
 
 @WebServlet("/user")
-public class UserController extends HttpServlet {
+public class ClientController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private KitDao kitDAO;
-	private ProductMasterDao productMasterDao;
+	private ProductItemDao productMasterDao;
 
 	public void setKitDAO(KitDao kitDAO) {
 		this.kitDAO = kitDAO;
 	}
 
-	public void setProductMasterDao(ProductMasterDao productMasterDao) {
+	public void setProductMasterDao(ProductItemDao productMasterDao) {
 		this.productMasterDao = productMasterDao;
 	}
 

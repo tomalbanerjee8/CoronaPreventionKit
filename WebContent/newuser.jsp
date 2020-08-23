@@ -6,13 +6,14 @@
 <meta charset="ISO-8859-1">
 <title>Corona Kit-New User(user)</title>
 </head>
+
 <body>
 <jsp:include page="header.jsp"/>
-<hr/>
 
 <nav>
-<a href="homepage">Go to Home Page</a>
+<a href="homepage">Home Page</a>
 </nav>
+<hr />
 <br/>
 <br/>
 <form action="visitorlogin" method="post">
@@ -23,12 +24,12 @@
 		</div>
 		<br/>
 		<div>
-			<div><label for="email">Email ID</label> </div>
+			<div><label for="email">User Email ID</label> </div>
 			<div><input type="text" id="email" name="email" value="${visitorprof.emailid}" required> </div>
 		</div>
 		<br/>
 		<div>
-			<div><label for="contact">Contact Number</label> </div>
+			<div><label for="contact">User Contact Number</label> </div>
 			<div><input type="text" id="contact" name="contact" maxlength="10" minlength ="10" value="${visitorprof.contact}" required> </div>
 		</div>
 		

@@ -7,7 +7,10 @@
 <title>Corona Kit-Home</title>
 </head>
 <body>
-<div style="text-align: center">Stay Safe Stay Home</div><br>
 
+<footer>
+<h4 style="text-align: center">Ware Mask & Maintain Social Distancing</h4>
+<h4 style="text-align: center">Stay Home & Stay Safe</h4>
+</footer>
 </body>
 </html>

@@ -11,21 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.wf.corona.exception.CoronaException;
-import com.wf.corona.model.ProductMaster;
-import com.wf.corona.model.VisitorProfile;
-import com.wf.corona.service.AdminService;
-import com.wf.corona.service.AdminServiceImpl;
+import com.wf.corona.exception.CkException;
+import com.wf.corona.model.AddUserItem;
+import com.wf.corona.model.ProductItem;
+import com.wf.corona.model.AddUserItem;
+import com.wf.corona.service.ProductService;
+import com.wf.corona.service.ProductServiceImpl;
 
 @WebServlet({ "/visitorprofile","/visitorlogin","/additem","/showcart","/placeorder","/confirmorder","/homepage"})
-public class VisitorController extends HttpServlet{
+public class ClientViewController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
-	private AdminService adminService;
+	private ProductService adminService;
 
 	@Override
 	public void init() throws ServletException {
-		adminService = new AdminServiceImpl();
+		adminService = new ProductServiceImpl();
 	}
 
 	@Override
@@ -82,18 +83,18 @@ public class VisitorController extends HttpServlet{
 	{
 		String view;
 		try {
-			VisitorProfile visitorprof = new VisitorProfile();
+			AddUserItem visitorprof = new AddUserItem();
 			visitorprof.setUserName(request.getParameter("username"));
 			visitorprof.setEmailid(request.getParameter("email"));
 			visitorprof.setContact(request.getParameter("contact"));
 			request.getSession().setAttribute("visitorprof", visitorprof);
 			
-			List<ProductMaster> products = adminService.getAllProductMasters();
+			List<ProductItem> products = adminService.getAllProductMasters();
 			request.getSession().setAttribute("productMaster", products);
 			request.getSession().setAttribute("selectedProductsList", null);
 			view="productsDisplayList.jsp";
 		} 
-		catch (CoronaException e) {
+		catch (CkException e) {
 			request.setAttribute("errMsg", e.getMessage());
 			view = "errorPage.jsp";
 		}
@@ -104,21 +105,21 @@ public class VisitorController extends HttpServlet{
 	private String doAddItem(HttpServletRequest request, HttpServletResponse resp)
 	{
 		 HttpSession session = request.getSession();
-		 List<ProductMaster> selectedProductsList = (List<ProductMaster>) session.getAttribute("selectedProductsList");
-		List<ProductMaster> productsList = (List<ProductMaster>) session.getAttribute("productMaster");
+		 List<ProductItem> selectedProductsList = (List<ProductItem>) session.getAttribute("selectedProductsList");
+		List<ProductItem> productsList = (List<ProductItem>) session.getAttribute("productMaster");
 		  System.out.println("id " + request.getParameter("id"));
 		  System.out.println("req quan " + request.getParameter("reqQuantity"));
 		 
 		if(null == productsList)
 		{
-			productsList = new ArrayList<ProductMaster>();
+			productsList = new ArrayList<ProductItem>();
 		}
 		if(null == selectedProductsList)
 		{
-			selectedProductsList = new ArrayList<ProductMaster>();
+			selectedProductsList = new ArrayList<ProductItem>();
 		}
 		String productName = null;
-		for(ProductMaster prodmast : productsList)
+		for(ProductItem prodmast : productsList)
 		{
 			if(prodmast.getId()==Integer.parseInt(request.getParameter("id")) && Integer.parseInt(request.getParameter("reqQuantity"))>0)
 			{
@@ -133,7 +134,7 @@ public class VisitorController extends HttpServlet{
 				prodmast.setReqQuantity(Integer.parseInt(request.getParameter("reqQuantity")));
 				productName = prodmast.getProductName();
 				request.setAttribute("msg", "Product " + productName + " is removed from cart");
-				for(ProductMaster selprodmast : selectedProductsList)
+				for(ProductItem selprodmast : selectedProductsList)
 				{
 					if(selprodmast.getId()==Integer.parseInt(request.getParameter("id")))
 					{
@@ -153,8 +154,8 @@ public class VisitorController extends HttpServlet{
 			request.setAttribute("msg", "Product " + productName + " is added to cart");
 			session.setAttribute("productMaster", productsList);
 			session.setAttribute("selectedProductsList", selectedProductsList);
-			List<ProductMaster> productsList1 = (List<ProductMaster>) request.getSession().getAttribute("productMaster");
-			for(ProductMaster prodmast : productsList)
+			List<ProductItem> productsList1 = (List<ProductItem>) request.getSession().getAttribute("productMaster");
+			for(ProductItem prodmast : productsList)
 			{
 				System.out.println("after id " +prodmast.getId());
 				System.out.println("after req " + prodmast.getReqQuantity());
@@ -169,9 +170,9 @@ public class VisitorController extends HttpServlet{
 	{
 		
 		  HttpSession session = request.getSession();
-		  List<ProductMaster> selectedProductsList = (List<ProductMaster>)session.getAttribute("selectedProductsList");
+		  List<ProductItem> selectedProductsList = (List<ProductItem>)session.getAttribute("selectedProductsList");
 		  Double totalAmount = 0d;
-		  for(ProductMaster prodmast : selectedProductsList)
+		  for(ProductItem prodmast : selectedProductsList)
 		  {
 			  totalAmount = prodmast.getCost() * prodmast.getReqQuantity() + totalAmount;
 			  prodmast.setTotalCost(prodmast.getCost() * prodmast.getReqQuantity());
@@ -191,7 +192,7 @@ public class VisitorController extends HttpServlet{
 	
 	private String doConfirmOrder(HttpServletRequest request, HttpServletResponse resp)
 	{
-		VisitorProfile vistorProf = (VisitorProfile) request.getSession().getAttribute("visitorprof");
+		AddUserItem vistorProf = (AddUserItem) request.getSession().getAttribute("visitorprof");
 		System.out.println("flat no " + request.getParameter("flatno"));
 		vistorProf.setFlatno(request.getParameter("flatno"));
 		vistorProf.setArea(request.getParameter("area"));

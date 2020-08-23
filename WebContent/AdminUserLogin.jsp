@@ -9,7 +9,7 @@
 </head>
 <jsp:include page="header.jsp"/>
 <body>
-<hr/>
+
 	
 	<c:if test="${loginsuccess != true}">
 	<h2>Admin Login</h2>
@@ -34,19 +34,20 @@
 	</c:if>
 	
 	<c:if test="${loginsuccess==true}">
-	<h2>You are now an admin!</h2>
-	<nav>
-	<a href="listOfproductsAdmin">Product List</a>
-	<span>|</span>
-	<a href="addproduct">Add New Product</a>
-	<span>|</span>
-	<a href="logout">Logout</a>
-	</nav>
+	<h2>Welcome To Admin Portal</h2>
 	<c:if test="${msg != null }">
 		<p><strong style="color: blue;">${msg }</strong></p>
+		</c:if>
+	<nav>
+	<a href="addproduct">Add New Product</a>
+	<span> | </span>
+	<a href="logout">Logout</a>
+	<hr />
+	</nav>
+	
 	</c:if>
-	</c:if>
+	
 </div>
-<hr/>
+
 </body>
 </html>

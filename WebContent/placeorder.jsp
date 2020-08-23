@@ -11,7 +11,7 @@
 <hr/>
 
 <nav>
-<a href="homepage">Go to Home Page</a>
+<a href="homepage">Home Page</a>
 </nav>
 
 <h3>
@@ -24,23 +24,23 @@ Enter Delivery Address
 			<input type="text" id="flatno" name="flatno" value="${visitorprof.flatno}" required> </div>
 		</div>
 		<div>
-			<div><label for="street">Street </label>
+			<div><label for="street">Street: </label>
 			<input type="text" id="street" name="street" value="${visitorprof.street }" required> </div>
 		</div>
 		<div>
-			<div><label for="area">Area </label> 
+			<div><label for="area">Area: </label> 
 			<input type="text" id="area" name="area" value="${visitorprof.area }" required> </div>
 		</div>
 		<div>
-			<div><label for="city">City </label> 
+			<div><label for="city">City: </label> 
 			<input type="text" id="city" name="city" value="${visitorprof.city }" required> </div>
 		</div>
 		<div>
-			<div><label for="state">State </label>
+			<div><label for="state">State: </label>
 			<input type="text" id="state" name="state" value="${visitorprof.state }" required> </div>
 		</div>
 		
-		<button>Confirm Order</button>
+		<button>Place Order</button>
 	</form>
 		
 

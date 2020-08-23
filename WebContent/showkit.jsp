@@ -10,17 +10,21 @@
 <body>
 <jsp:include page="header.jsp"/>
 <nav>
-<a href="homepage">Go to Home Page</a>
+<a href="homepage">Home Page</a><span> | </span>
+<a href="productsDisplayList.jsp">Product List</a><span> | </span>
+<a href="placeorder">Place Order</a>
 </nav>
-
-
+<hr />
+<h2>Product Cart</h2>
 	<c:choose>
 		<c:when test="${selectedProductsList == null || selectedProductsList.isEmpty() }">
 			<p>No products were selected</p>
 		</c:when>
 		<c:otherwise>
-		<h3>Products added to cart by you!!</h3>
-		<hr/>
+		
+		<h3>Products added to cart!!</h3>
+		
+		
 			<table border="1" cellspacing="5px" cellpadding="5px">
 				<tr>
 					<th>Description</th>
@@ -53,9 +57,7 @@
 		<p><strong>${msg }</strong></p>
 	</c:if>
 	
-	<nav>
-	<a href="placeorder">Place Order</a>
-	</nav>
+	
 	
 	<jsp:include page="footer.jsp"/>
 </body>

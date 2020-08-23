@@ -1,5 +1,5 @@
 <header>
-	<h1 style="text-align:center">Corona kit Management System</h1>
+	<h1 style="text-align:center">Corona Prevention kit</h1>
 	<hr />
 	
 </header>
