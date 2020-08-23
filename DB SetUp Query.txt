@@ -1,0 +1,12 @@
+CATEATE DATABASE coronaKitDb;
+
+USE coronaKitDb;
+
+CREATE TABLE productitems( 
+id int primary key not null,
+	productdesc varchar(50), productname varchar(20) not null,
+ cost double not null);
+
+NSERT INTO producproductitems VALUES
+(1,"facemask ","n95",30);
+
